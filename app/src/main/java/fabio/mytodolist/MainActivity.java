@@ -8,7 +8,11 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 import fabio.mytodolist.adapters.TodoArrayAdapter;
+import fabio.mytodolist.dao.TodoDao;
+import fabio.mytodolist.dao.TodoListDatabaseHelper;
 import fabio.mytodolist.models.Todo;
 
 public class MainActivity extends AppCompatActivity {
@@ -24,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
         this.setViewElements();
         this.setViewEvents();
+        this.fillTodoList();
     }
 
 
@@ -48,10 +53,30 @@ public class MainActivity extends AppCompatActivity {
                     todoArrayAdapter.add(todo);
 
                     userTodoEditText.setText("");
+
+                    TodoDao todoDao = new TodoDao(getApplicationContext());
+
+
+                    final boolean saved = todoDao.saveTodo(todo);
+
+                    if (saved) {
+                        Toast.makeText(getApplicationContext(), "Todo data saved", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Could no save the todo data", Toast.LENGTH_SHORT).show();
+                    }
                 } catch (Error err) {
                     Toast.makeText(getApplicationContext(), err.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
         });
+    }
+
+
+    private void fillTodoList() {
+        final TodoDao todoDao = new TodoDao(getApplicationContext());
+        final ArrayList<Todo> todos = todoDao.getAllTodos();
+        final TodoArrayAdapter todoArrayAdapter = (TodoArrayAdapter) this.userTodoListView.getAdapter();
+
+        todoArrayAdapter.addAll(todos);
     }
 }
