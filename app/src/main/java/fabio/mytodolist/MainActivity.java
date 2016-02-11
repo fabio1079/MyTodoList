@@ -54,8 +54,7 @@ public class MainActivity extends AppCompatActivity {
 
                     userTodoEditText.setText("");
 
-                    TodoDao todoDao = new TodoDao(getApplicationContext());
-
+                    final TodoDao todoDao = new TodoDao(getApplicationContext());
 
                     final boolean saved = todoDao.saveTodo(todo);
 

@@ -9,12 +9,14 @@ import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import fabio.mytodolist.R;
+import fabio.mytodolist.dao.TodoDao;
 import fabio.mytodolist.models.Todo;
 
 public class TodoArrayAdapter extends ArrayAdapter<Todo> {
-    public TodoArrayAdapter(Context context, int resource) {
+    public TodoArrayAdapter(final Context context, int resource) {
         super(context, resource);
     }
 
@@ -30,10 +32,20 @@ public class TodoArrayAdapter extends ArrayAdapter<Todo> {
         todoSwitch.setText(todo.getText());
         todoSwitch.setChecked(todo.isDone());
 
-        todoSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        todoSwitch.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                todo.setDone(isChecked);
+            public void onClick(View v) {
+                final Switch clickSwitch = (Switch) v;
+                todo.setDone(clickSwitch.isChecked());
+                TodoDao todoDao = new TodoDao(getContext());
+
+                final boolean saved = todoDao.updateTodo(todo);
+
+                if (saved) {
+                    Toast.makeText(getContext(), "Todo data updated", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getContext(), "Could no save update", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 

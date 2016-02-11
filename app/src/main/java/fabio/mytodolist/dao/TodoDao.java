@@ -26,12 +26,9 @@ public class TodoDao extends TodoListDatabaseHelper {
 
         final long result = db.insert(TABLE_NAME, null, contentValues);
 
-        if (result != -1) {
-            return true;
-        } else {
-            return false;
-        }
+        return this.getQueryResultAsBoolean(result);
     }
+
 
     public ArrayList<Todo> getAllTodos() {
         final Cursor todosCursor = this.selectAllCursor();
@@ -50,6 +47,15 @@ public class TodoDao extends TodoListDatabaseHelper {
     }
 
 
+    public boolean updateTodo(final Todo todo) {
+        final SQLiteDatabase db = this.getWritableDatabase();
+        final ContentValues contentValues = this.getDatabaseValues(todo);
+        final long result = db.update(TABLE_NAME, contentValues, "id = "+todo.getId(), null);
+
+        return this.getQueryResultAsBoolean(result);
+    }
+
+
     private Cursor selectAllCursor() {
         final String SELECT_SQL = "SELECT * FROM "+TABLE_NAME;
         final SQLiteDatabase db = this.getWritableDatabase();
@@ -63,8 +69,22 @@ public class TodoDao extends TodoListDatabaseHelper {
         final ContentValues contentValues = new ContentValues();
 
         contentValues.put(COLUMNS_NAMES[0], todo.getText());
-        contentValues.put(COLUMNS_NAMES[1], todo.isDone());
+
+        int doneAsInt = 0;
+        if (todo.isDone()) {
+            doneAsInt = 1;
+        }
+        contentValues.put(COLUMNS_NAMES[1], doneAsInt);
 
         return contentValues;
+    }
+
+
+    private boolean getQueryResultAsBoolean(final long queryQesult) {
+        if (queryQesult != -1) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
