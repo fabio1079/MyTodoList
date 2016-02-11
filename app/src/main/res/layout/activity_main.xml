@@ -12,24 +12,24 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/UserTodoEditText"
+        android:id="@+id/userTodoEditText"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:layout_toStartOf="@+id/AddTodoButton" />
+        android:layout_toStartOf="@+id/addTodoButton" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/add_todo_button"
-        android:id="@+id/AddTodoButton"
-        android:layout_alignBottom="@+id/UserTodoEditText"
+        android:id="@+id/addTodoButton"
+        android:layout_alignBottom="@+id/userTodoEditText"
         android:layout_alignParentEnd="true" />
 
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/USerTodoListView"
-        android:layout_below="@+id/UserTodoEditText"
+        android:id="@+id/userTodoListView"
+        android:layout_below="@+id/userTodoEditText"
         android:layout_alignParentStart="true" />
 </RelativeLayout>
