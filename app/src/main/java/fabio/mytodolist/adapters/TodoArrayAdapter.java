@@ -2,6 +2,7 @@ package fabio.mytodolist.adapters;
 
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +33,10 @@ public class TodoArrayAdapter extends ArrayAdapter<Todo> {
         todoSwitch.setText(todo.getText());
         todoSwitch.setChecked(todo.isDone());
 
+        if (todoSwitch.isChecked()) {
+            todoSwitch.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+        }
+
         todoSwitch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -41,10 +46,10 @@ public class TodoArrayAdapter extends ArrayAdapter<Todo> {
 
                 final boolean saved = todoDao.updateTodo(todo);
 
-                if (saved) {
-                    Toast.makeText(getContext(), "Todo data updated", Toast.LENGTH_SHORT).show();
+                if (clickSwitch.isChecked()) {
+                    clickSwitch.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
                 } else {
-                    Toast.makeText(getContext(), "Could no save update", Toast.LENGTH_SHORT).show();
+                    clickSwitch.setPaintFlags(0);
                 }
             }
         });

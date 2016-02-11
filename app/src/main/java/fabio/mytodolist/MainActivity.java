@@ -57,12 +57,6 @@ public class MainActivity extends AppCompatActivity {
                     final TodoDao todoDao = new TodoDao(getApplicationContext());
 
                     final boolean saved = todoDao.saveTodo(todo);
-
-                    if (saved) {
-                        Toast.makeText(getApplicationContext(), "Todo data saved", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(getApplicationContext(), "Could no save the todo data", Toast.LENGTH_SHORT).show();
-                    }
                 } catch (Error err) {
                     Toast.makeText(getApplicationContext(), err.getMessage(), Toast.LENGTH_SHORT).show();
                 }
