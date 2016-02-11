@@ -77,6 +77,6 @@ public class TodoArrayAdapter extends ArrayAdapter<Todo> {
 
 
     private void setSwitchOnClickListener(final Switch todoSwitch, final Todo todo) {
-        todoSwitch.setOnClickListener(new TodoSwitchOnClickListener(todo.getId()));
+        todoSwitch.setOnClickListener(new TodoSwitchOnClickListener(todo));
     }
 }
