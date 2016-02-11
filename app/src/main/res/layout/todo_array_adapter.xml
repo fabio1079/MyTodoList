@@ -8,5 +8,6 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Large Text"
-        android:id="@+id/todoTextView" />
+        android:id="@+id/todoTextView"
+        android:textColor="#000000" />
 </LinearLayout>

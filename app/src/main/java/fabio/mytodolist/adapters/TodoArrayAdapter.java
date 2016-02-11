@@ -12,8 +12,8 @@ import fabio.mytodolist.R;
 import fabio.mytodolist.models.Todo;
 
 public class TodoArrayAdapter extends ArrayAdapter<Todo> {
-    public TodoArrayAdapter(Context context, int resource, Todo[] objects) {
-        super(context, resource, objects);
+    public TodoArrayAdapter(Context context, int resource) {
+        super(context, resource);
     }
 
     public View getView(final int position, View convertView, final ViewGroup parent) {
