@@ -10,6 +10,7 @@ public class Todo {
 
     public Todo(final String text) {
         this.setText(text);
+        this.setDone(false);
     }
 
     public String getText() {

@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import fabio.mytodolist.R;
@@ -23,9 +25,17 @@ public class TodoArrayAdapter extends ArrayAdapter<Todo> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.todo_array_adapter, parent, false);
         }
 
-        final TextView todoText = (TextView) convertView.findViewById(R.id.todoTextView);
+        final Switch todoSwitch = (Switch) convertView.findViewById(R.id.todoSwitch);
 
-        todoText.setText(todo.getText());
+        todoSwitch.setText(todo.getText());
+        todoSwitch.setChecked(todo.isDone());
+
+        todoSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                todo.setDone(isChecked);
+            }
+        });
 
         return convertView;
     }
