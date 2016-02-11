@@ -11,8 +11,8 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import fabio.mytodolist.custom.adapters.TodoArrayAdapter;
-import fabio.mytodolist.dao.TodoDao;
-import fabio.mytodolist.models.Todo;
+import fabio.mytodolist.models.dao.TodoDao;
+import fabio.mytodolist.models.beans.Todo;
 
 public class MainActivity extends AppCompatActivity {
     private EditText userTodoEditText;

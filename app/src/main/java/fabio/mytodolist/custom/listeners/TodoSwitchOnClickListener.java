@@ -4,7 +4,7 @@ import android.graphics.Paint;
 import android.view.View;
 import android.widget.Switch;
 
-import fabio.mytodolist.dao.TodoDao;
+import fabio.mytodolist.models.dao.TodoDao;
 
 public class TodoSwitchOnClickListener implements View.OnClickListener {
     private final int todoId;

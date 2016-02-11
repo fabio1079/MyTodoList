@@ -1,4 +1,4 @@
-package fabio.mytodolist.dao;
+package fabio.mytodolist.models.dao;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
 
-import fabio.mytodolist.models.Todo;
+import fabio.mytodolist.models.beans.Todo;
 
 public class TodoDao extends TodoListDatabaseHelper {
     private static final String TABLE_NAME = "todos";

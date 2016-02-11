@@ -1,4 +1,4 @@
-package fabio.mytodolist.models;
+package fabio.mytodolist.models.beans;
 
 
 public class Todo {

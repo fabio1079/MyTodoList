@@ -1,4 +1,4 @@
-package fabio.mytodolist.dao;
+package fabio.mytodolist.models.dao;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

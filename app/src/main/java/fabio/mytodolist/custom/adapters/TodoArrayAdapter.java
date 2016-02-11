@@ -7,17 +7,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.CompoundButton;
 import android.widget.Switch;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import fabio.mytodolist.R;
 import fabio.mytodolist.custom.listeners.TodoSwitchOnClickListener;
-import fabio.mytodolist.dao.TodoDao;
-import fabio.mytodolist.models.Todo;
+import fabio.mytodolist.models.beans.Todo;
 
 public class TodoArrayAdapter extends ArrayAdapter<Todo> {
     public TodoArrayAdapter(final Context context, int resource) {
