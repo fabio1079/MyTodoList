@@ -15,6 +15,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import fabio.mytodolist.R;
+import fabio.mytodolist.custom.listeners.TodoSwitchOnClickListener;
 import fabio.mytodolist.dao.TodoDao;
 import fabio.mytodolist.models.Todo;
 
@@ -32,29 +33,8 @@ public class TodoArrayAdapter extends ArrayAdapter<Todo> {
 
         final Switch todoSwitch = (Switch) convertView.findViewById(R.id.todoSwitch);
 
-        todoSwitch.setText(todo.getText());
-        todoSwitch.setChecked(todo.isDone());
-
-        if (todoSwitch.isChecked()) {
-            todoSwitch.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
-        }
-
-        todoSwitch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final Switch clickSwitch = (Switch) v;
-                todo.setDone(clickSwitch.isChecked());
-                TodoDao todoDao = new TodoDao(getContext());
-
-                final boolean saved = todoDao.updateTodo(todo);
-
-                if (clickSwitch.isChecked()) {
-                    clickSwitch.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
-                } else {
-                    clickSwitch.setPaintFlags(0);
-                }
-            }
-        });
+        this.setSwitchProperties(todoSwitch, todo);
+        this.setSwitchOnClickListener(todoSwitch, todo);
 
         return convertView;
     }
@@ -85,5 +65,22 @@ public class TodoArrayAdapter extends ArrayAdapter<Todo> {
         }
 
         return todos;
+    }
+
+
+    private void setSwitchProperties(final Switch todoSwitch, final Todo todo) {
+        todoSwitch.setText(todo.getText());
+        todoSwitch.setChecked(todo.isDone());
+
+        if (todoSwitch.isChecked()) {
+            todoSwitch.setPaintFlags(todoSwitch.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        } else {
+            todoSwitch.setPaintFlags(0);
+        }
+    }
+
+
+    private void setSwitchOnClickListener(final Switch todoSwitch, final Todo todo) {
+        todoSwitch.setOnClickListener(new TodoSwitchOnClickListener(todo.getId()));
     }
 }

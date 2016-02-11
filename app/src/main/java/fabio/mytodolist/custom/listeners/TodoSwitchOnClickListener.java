@@ -1,0 +1,31 @@
+package fabio.mytodolist.custom.listeners;
+
+import android.graphics.Paint;
+import android.view.View;
+import android.widget.Switch;
+
+import fabio.mytodolist.dao.TodoDao;
+
+public class TodoSwitchOnClickListener implements View.OnClickListener {
+    private final int todoId;
+
+    public TodoSwitchOnClickListener(final int id) {
+        super();
+
+        this.todoId = id;
+    }
+
+    @Override
+    public void onClick(View v) {
+        final Switch clickSwitch = (Switch) v;
+        final TodoDao todoDao = new TodoDao(clickSwitch.getContext());
+
+        final boolean saved = todoDao.updateTodo(todoId, clickSwitch.isChecked());
+
+        if (clickSwitch.isChecked()) {
+            clickSwitch.setPaintFlags(clickSwitch.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        } else {
+            clickSwitch.setPaintFlags(0);
+        }
+    }
+}

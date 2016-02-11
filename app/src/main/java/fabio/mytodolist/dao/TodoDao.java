@@ -55,6 +55,17 @@ public class TodoDao extends TodoListDatabaseHelper {
         return this.getQueryResultAsBoolean(result);
     }
 
+    public boolean updateTodo(final int id, final boolean done) {
+        final SQLiteDatabase db = this.getWritableDatabase();
+        final ContentValues contentValues = new ContentValues();
+
+        contentValues.put(COLUMNS_NAMES[1], done);
+
+        final long result = db.update(TABLE_NAME, contentValues, "id = "+id, null);
+
+        return this.getQueryResultAsBoolean(result);
+    }
+
 
     public boolean deleteTodo(final Todo todo) {
         final SQLiteDatabase db = this.getWritableDatabase();
