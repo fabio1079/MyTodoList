@@ -12,6 +12,8 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 import fabio.mytodolist.R;
 import fabio.mytodolist.dao.TodoDao;
 import fabio.mytodolist.models.Todo;
@@ -55,5 +57,33 @@ public class TodoArrayAdapter extends ArrayAdapter<Todo> {
         });
 
         return convertView;
+    }
+
+
+    public ArrayList<Todo> getAllTodos() {
+        final int todosCount = getCount();
+        final ArrayList<Todo> todos = new ArrayList<Todo>();
+
+        for (int i = 0; i < todosCount; ++i) {
+            final Todo todo = getItem(i);
+            todos.add(todo);
+        }
+
+        return todos;
+    }
+
+    public ArrayList<Todo> getAllTodos(boolean done) {
+        final int todosCount = getCount();
+        final ArrayList<Todo> todos = new ArrayList<Todo>();
+
+        for (int i = 0; i < todosCount; ++i) {
+            final Todo todo = getItem(i);
+
+            if (todo.isDone() == done) {
+                todos.add(todo);
+            }
+        }
+
+        return todos;
     }
 }

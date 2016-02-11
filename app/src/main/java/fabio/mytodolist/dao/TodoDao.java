@@ -56,6 +56,18 @@ public class TodoDao extends TodoListDatabaseHelper {
     }
 
 
+    public boolean deleteTodo(final Todo todo) {
+        final SQLiteDatabase db = this.getWritableDatabase();
+        final int result = db.delete(TABLE_NAME, "id = "+todo.getId(), null);
+
+        if (result > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
     private Cursor selectAllCursor() {
         final String SELECT_SQL = "SELECT * FROM "+TABLE_NAME;
         final SQLiteDatabase db = this.getWritableDatabase();

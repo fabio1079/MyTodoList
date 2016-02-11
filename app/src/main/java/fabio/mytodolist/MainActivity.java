@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText userTodoEditText;
     private Button addTodoButton;
     private ListView userTodoListView;
+    private Button deleteTodosButton;
 
 
     @Override
@@ -36,12 +37,28 @@ public class MainActivity extends AppCompatActivity {
         this.userTodoEditText = (EditText) findViewById(R.id.userTodoEditText);
         this.addTodoButton = (Button) findViewById(R.id.addTodoButton);
         this.userTodoListView = (ListView) findViewById(R.id.userTodoListView);
+        this.deleteTodosButton = (Button) findViewById(R.id.deleteTodosButton);
 
         this.userTodoListView.setAdapter(new TodoArrayAdapter(getApplicationContext(), R.layout.todo_array_adapter));
     }
 
 
     private void setViewEvents() {
+        this.setAddTodoButtonOnClickListener();
+        this.setDeleteTodosButtonOnClickEvent();
+    }
+
+
+    private void fillTodoList() {
+        final TodoDao todoDao = new TodoDao(getApplicationContext());
+        final ArrayList<Todo> todos = todoDao.getAllTodos();
+        final TodoArrayAdapter todoArrayAdapter = (TodoArrayAdapter) this.userTodoListView.getAdapter();
+
+        todoArrayAdapter.addAll(todos);
+    }
+
+
+    private void setAddTodoButtonOnClickListener() {
         this.addTodoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
@@ -65,11 +82,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void fillTodoList() {
-        final TodoDao todoDao = new TodoDao(getApplicationContext());
-        final ArrayList<Todo> todos = todoDao.getAllTodos();
-        final TodoArrayAdapter todoArrayAdapter = (TodoArrayAdapter) this.userTodoListView.getAdapter();
 
-        todoArrayAdapter.addAll(todos);
+    private void setDeleteTodosButtonOnClickEvent() {
+        this.deleteTodosButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final TodoArrayAdapter todoArrayAdapter = (TodoArrayAdapter) userTodoListView.getAdapter();
+                final ArrayList<Todo> todos = todoArrayAdapter.getAllTodos(true);
+                final TodoDao todoDao = new TodoDao(getApplicationContext());
+
+                for (final Todo todo: todos) {
+                    final boolean deleted = todoDao.deleteTodo(todo);
+
+                    if (deleted) {
+                        todoArrayAdapter.remove(todo);
+                    }
+                }
+            }
+        });
     }
 }
