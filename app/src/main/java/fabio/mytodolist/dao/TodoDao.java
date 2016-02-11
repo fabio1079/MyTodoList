@@ -20,13 +20,25 @@ public class TodoDao extends TodoListDatabaseHelper {
     }
 
 
-    public boolean saveTodo(final Todo todo) {
+    public long saveTodo(final Todo todo) {
         final SQLiteDatabase db = this.getWritableDatabase();
         final ContentValues contentValues = this.getDatabaseValues(todo);
 
         final long result = db.insert(TABLE_NAME, null, contentValues);
 
-        return this.getQueryResultAsBoolean(result);
+        return result;
+    }
+
+
+    public Todo getTodo(final long id) {
+        final String SELECT_TODO_QUERY = "SELECT * FROM "+TABLE_NAME+" WHERE id = ?";
+        final SQLiteDatabase db = this.getWritableDatabase();
+        final Cursor todoSelectCursor = db.rawQuery(SELECT_TODO_QUERY, new String[]{Long.toString(id)});
+
+        todoSelectCursor.moveToFirst();
+        final Todo todo = this.getTodoFromCursor(todoSelectCursor);
+
+        return todo;
     }
 
 
@@ -35,11 +47,7 @@ public class TodoDao extends TodoListDatabaseHelper {
         ArrayList<Todo> todos = new ArrayList<Todo>();
 
         while (todosCursor.moveToNext()) {
-            final int id = todosCursor.getInt(0);
-            final String text = todosCursor.getString(1);
-            final int done = todosCursor.getInt(2);
-            final Todo todo = new Todo(id, text, done != 0);
-
+            final Todo todo = this.getTodoFromCursor(todosCursor);
             todos.add(todo);
         }
 
@@ -109,5 +117,15 @@ public class TodoDao extends TodoListDatabaseHelper {
         } else {
             return false;
         }
+    }
+
+
+    private Todo getTodoFromCursor(Cursor todoCursor) {
+        final int id = todoCursor.getInt(0);
+        final String text = todoCursor.getString(1);
+        final int done = todoCursor.getInt(2);
+        final Todo todo = new Todo(id, text, done != 0);
+
+        return todo;
     }
 }

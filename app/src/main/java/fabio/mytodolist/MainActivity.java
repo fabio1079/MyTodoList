@@ -10,9 +10,8 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import fabio.mytodolist.adapters.TodoArrayAdapter;
+import fabio.mytodolist.custom.adapters.TodoArrayAdapter;
 import fabio.mytodolist.dao.TodoDao;
-import fabio.mytodolist.dao.TodoListDatabaseHelper;
 import fabio.mytodolist.models.Todo;
 
 public class MainActivity extends AppCompatActivity {
@@ -66,14 +65,15 @@ public class MainActivity extends AppCompatActivity {
                 final TodoArrayAdapter todoArrayAdapter = (TodoArrayAdapter) userTodoListView.getAdapter();
 
                 try {
-                    final Todo todo = new Todo(todoText);
-                    todoArrayAdapter.add(todo);
-
-                    userTodoEditText.setText("");
-
+                    final Todo todoToSave = new Todo(todoText);
                     final TodoDao todoDao = new TodoDao(getApplicationContext());
+                    final long savedTodoId = todoDao.saveTodo(todoToSave);
 
-                    final boolean saved = todoDao.saveTodo(todo);
+                    if (savedTodoId != -1) {
+                        final Todo savedTodo = todoDao.getTodo(savedTodoId);
+                        todoArrayAdapter.add(savedTodo);
+                        userTodoEditText.setText("");
+                    }
                 } catch (Error err) {
                     Toast.makeText(getApplicationContext(), err.getMessage(), Toast.LENGTH_SHORT).show();
                 }

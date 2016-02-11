@@ -1,4 +1,4 @@
-package fabio.mytodolist.adapters;
+package fabio.mytodolist.custom.adapters;
 
 
 import android.content.Context;
